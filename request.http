@@ -1,0 +1,17 @@
+@baseUrl = http://localhost:5000
+
+### Create PIX payment
+POST {{baseUrl}}/payments/pix
+Content-Type: application/json
+
+{}
+
+### Confirm PIX payment
+POST {{baseUrl}}/payments/pix/confirmation
+Content-Type: application/json
+
+{}
+
+### Get PIX payment
+GET {{baseUrl}}/payments/pix/1
+Accept: text/plain
