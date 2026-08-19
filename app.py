@@ -1,6 +1,7 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from repository.database import db
 from db_models.payment import Payment
+from datetime import datetime, timedelta
 
 # Create the Flask application instance.
 # This object represents the web app and is used to register routes and configure settings.
@@ -21,7 +22,18 @@ db.init_app(app)
 # Define payment route using PIX
 @app.route('/payments/pix', methods=['POST'])
 def create_payment_pix():
-  return jsonify({'message': 'Pix payment has been created successfully!'}), 201
+  data = request.get_json()
+  #validation
+  if 'value' not in data:
+    return jsonify({'error': 'Value is required'}), 400
+  expiration_date = datetime.now() + timedelta(minutes=30)
+  new_payment = Payment(value=data['value'], 
+                        expiration_date=expiration_date)
+  db.session.add(new_payment)
+  db.session.commit()
+
+  return jsonify({'message': 'Pix payment has been created successfully!',
+                  'payment': new_payment.to_dict()}), 201
 
 @app.route('/payments/pix/confirmation', methods=['POST'])
 def confirm_payment_pix():
