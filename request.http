@@ -4,7 +4,9 @@
 POST {{baseUrl}}/payments/pix
 Content-Type: application/json
 
-{}
+{
+  "value": 500
+}
 
 ### Confirm PIX payment
 POST {{baseUrl}}/payments/pix/confirmation
