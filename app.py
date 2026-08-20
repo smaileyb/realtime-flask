@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, send_file, render_template
+from flask_socketio import SocketIO
 from repository.database import db
 from db_models.payment import Payment
 from datetime import datetime, timedelta
@@ -18,6 +19,7 @@ app.config['SECRET_KEY'] = 'SECRET_KEY_WEBSOCKET'
 # Initialize SQLAlchemy with this Flask app so database models can be used.
 # This binds the database extension to the application instance.
 db.init_app(app)
+socketio = SocketIO(app)
 
 #Routes
 # Define payment route using PIX
@@ -51,7 +53,7 @@ def confirm_payment_pix():
 
 @app.route('/payments/pix/<int:payment_id>', methods=['GET'])
 def payment_pix_page(payment_id):
-  payment = Payment.query.get(payment_id)
+  payment = db.session.get(Payment, payment_id)
 
   return render_template('payment.html', 
                          payment_id=payment.id, 
@@ -59,5 +61,10 @@ def payment_pix_page(payment_id):
                          host='http://localhost:5000', 
                          qr_code=payment.qr_code)
 
+## Websockets
+@socketio.on('connect')
+def handle_connect():
+  print('Client connected')
+
 if __name__ == '__main__':
-  app.run(debug=True)
+  socketio.run(app, debug=True)
