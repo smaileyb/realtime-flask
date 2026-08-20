@@ -17,3 +17,6 @@ Content-Type: application/json
 ### Get PIX payment
 GET {{baseUrl}}/payments/pix/1
 Accept: text/plain
+
+### Get QR code image
+GET {{baseUrl}}/payments/pix/qr_code/qr_code_payment_c5fb8b9f-af91-431a-be35-9f7461acc313

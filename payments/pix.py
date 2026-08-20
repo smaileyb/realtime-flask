@@ -6,7 +6,7 @@ class Pix:
     pass
   def create_payment(self, value):
     # create the payment in the financial institution
-    bank_payment_id = uuid.uuid4()
+    bank_payment_id = str(uuid.uuid4())
 
     #simulate code for qr code generation
     hash_payment = f'hash_payment_{bank_payment_id}'
