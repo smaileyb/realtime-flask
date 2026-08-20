@@ -11,3 +11,6 @@ wheels/
 # Ignore Flask instance folder
 instance/
 instance/*
+# Ignore generated media and QR codes
+static/img/
+*.png
