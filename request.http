@@ -12,7 +12,10 @@ Content-Type: application/json
 POST {{baseUrl}}/payments/pix/confirmation
 Content-Type: application/json
 
-{}
+{
+  "value": 500,
+  "bank_payment_id": "6dee6192-84e8-49c2-b93c-cc01a1dd442f"
+}
 
 ### Get PIX payment
 GET {{baseUrl}}/payments/pix/1
