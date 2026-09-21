@@ -74,6 +74,8 @@ This project uses `uv` for dependency management, as configured in `pyproject.to
 uv sync
 ```
 
+This installs all dependencies into the project environment.
+
 If you prefer using pip:
 
 ```bash
@@ -82,6 +84,22 @@ source .venv/bin/activate  # Linux/macOS
 .venv\Scripts\activate     # Windows
 pip install flask flask-socketio flask-sqlalchemy pillow qrcode pytest
 ```
+
+## 🗄️ Create the SQLite database
+
+After installing the dependencies, create the SQLite tables with the Flask app context:
+
+```bash
+uv run python -c "from app import app, db; app.app_context().push(); db.create_all(); print('Database created successfully')"
+```
+
+If you are using a virtual environment instead of `uv`, run:
+
+```bash
+python -c "from app import app, db; app.app_context().push(); db.create_all(); print('Database created successfully')"
+```
+
+This creates the SQLite database file and the related tables used by the project.
 
 ## ▶️ Run the application
 
