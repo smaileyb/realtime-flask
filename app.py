@@ -51,10 +51,11 @@ def get_image(file_name):
 def confirm_payment_pix():
   data = request.get_json()
 
-  # Validations
+  # validations
   if "bank_payment_id" not in data and "value" not in data:
     return jsonify({'error': 'Invalid payment data'}), 400
 
+# payment
   payment = Payment.query.filter_by(bank_payment_id=data.get('bank_payment_id')).first()
   if not payment or payment.paid:
     return jsonify({'error': 'Payment not found'}), 404
@@ -63,13 +64,18 @@ def confirm_payment_pix():
     return jsonify({'error': 'Payment value does not match'}), 400
 
   payment.paid = True
-  db.session.commit()  
+  db.session.commit()
+  socketio.emit(f'payment_confirmed_{payment.id}', {'message': 'Payment confirmed successfully!'})
   return jsonify({'message': 'Pix payment has been confirmed successfully!'}), 201
 
 @app.route('/payments/pix/<int:payment_id>', methods=['GET'])
 def payment_pix_page(payment_id):
   payment = db.session.get(Payment, payment_id)
 
+  if payment.paid:
+    return render_template('confirmed_payment.html',
+                           payment_id=payment.id, 
+                           payment_value=payment.value)
   return render_template('payment.html', 
                          payment_id=payment.id, 
                          payment_value=payment.value, 
