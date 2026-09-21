@@ -5,7 +5,7 @@ POST {{baseUrl}}/payments/pix
 Content-Type: application/json
 
 {
-  "value": 1500
+  "value": 12000
 }
 
 ### Confirm PIX payment
@@ -13,8 +13,8 @@ POST {{baseUrl}}/payments/pix/confirmation
 Content-Type: application/json
 
 {
-  "value": 500,
-  "bank_payment_id": "6dee6192-84e8-49c2-b93c-cc01a1dd442f"
+  "value": 12000,
+  "bank_payment_id": "fdacca8a-4664-4af2-9bf9-4d519595b7c3"
 }
 
 ### Get PIX payment
