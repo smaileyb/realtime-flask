@@ -9,5 +9,6 @@ dependencies = [
     "flask-socketio>=5.6.1",
     "flask-sqlalchemy>=3.1.1",
     "pillow>=12.3.0",
+    "pytest>=9.1.1",
     "qrcode>=8.2",
 ]
